@@ -1,0 +1,16 @@
+
+spring:
+  application:
+    name: SNOW_SERVICE
+zk:
+  enabled: false
+  url: 127.0.0.1:12181
+  sessionTimeoutMs: 5000
+  connectTimeoutMs: 5000
+  baseSleepTimeMs: 1000
+  maxRetries: 5
+  maxSleepMs: 3000
+
+netty:
+  enabled: true
+  port: 10288

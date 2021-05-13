@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: SNOW_CLIENT
+
+
+netty:
+  ip: localhost
+  port: 10288
+
+server:
+  port: 13890
