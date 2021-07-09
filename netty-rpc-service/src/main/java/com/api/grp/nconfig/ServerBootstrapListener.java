@@ -31,8 +31,8 @@ public class ServerBootstrapListener implements ApplicationListener<ContextRefre
 
     @Autowired
     private NettyProperties properties;
-    @Autowired
-    private MethodMetaMaps methodMetaMaps;
+//    @Autowired
+//    private MethodMetaMaps methodMetaMaps;
 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {//ApplicationReadyEvent
@@ -55,7 +55,7 @@ public class ServerBootstrapListener implements ApplicationListener<ContextRefre
                                 ChannelPipeline pipeline = socketChannel.pipeline();
                                 pipeline.addLast(new RpcRequestByteToMessageDecoder());
                                 pipeline.addLast(new RpcResponseMessageToByteEncoder());
-                                pipeline.addLast(new ServerChannelInBoundHandler(methodMetaMaps));
+                                pipeline.addLast(new ServerChannelInBoundHandler(contextRefreshedEvent.getApplicationContext()));
 
                             }
                         });

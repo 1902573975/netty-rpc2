@@ -6,45 +6,19 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
 
+@Data
 public class RpcRequest implements Serializable {
 
     private String threadId;
 
-    private String methodSignId;
+    private HashMap requestHeader;
 
-    private HashMap<String,String> requestHeader;
+    private Class<?> clazz;
 
-    private List<Object> requestBody;
+    private String methodName;
+    //请求参数
+    private Object[] parameters;
 
-    public String getMethodSignId() {
-        return methodSignId;
-    }
+    private Class<?>[] parameterTypes;
 
-    public void setMethodSignId(String methodSignId) {
-        this.methodSignId = methodSignId;
-    }
-
-    public HashMap<String, String> getRequestHeader() {
-        return requestHeader;
-    }
-
-    public void setRequestHeader(HashMap<String, String> requestHeader) {
-        this.requestHeader = requestHeader;
-    }
-
-    public List<Object> getRequestBody() {
-        return requestBody;
-    }
-
-    public void setRequestBody(List<Object> requestBody) {
-        this.requestBody = requestBody;
-    }
-
-    public String getThreadId() {
-        return threadId;
-    }
-
-    public void setThreadId(String threadId) {
-        this.threadId = threadId;
-    }
 }

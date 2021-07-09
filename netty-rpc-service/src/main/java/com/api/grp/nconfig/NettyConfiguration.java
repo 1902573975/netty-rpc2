@@ -10,10 +10,4 @@ import org.springframework.context.annotation.Configuration;
 @EnableConfigurationProperties(NettyProperties.class)
 public class NettyConfiguration {
 
-
-    @Bean
-    public MethodMetaMaps getMetaCollection(){
-        return new MethodMetaMaps();
-    }
-
 }

@@ -13,7 +13,7 @@ public class ClientChannelInboundHandlerAdapter extends SimpleChannelInboundHand
     protected void channelRead0(ChannelHandlerContext channelHandlerContext, RpcResponse rpcResponse) throws Exception {
         String id = rpcResponse.getThreadId();
         if(id != null){
-            ThreadPool.setObject(id,rpcResponse.getData());
+            ThreadPool.setObject(id,rpcResponse);
             ThreadPool.notify(id);
         }
     }

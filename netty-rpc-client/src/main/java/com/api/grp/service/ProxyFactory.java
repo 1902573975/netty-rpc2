@@ -9,12 +9,16 @@ import net.sf.cglib.proxy.Enhancer;
 import net.sf.cglib.proxy.MethodInterceptor;
 import net.sf.cglib.proxy.MethodProxy;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.aop.TargetSource;
+import org.springframework.aop.framework.Advised;
+import org.springframework.aop.support.AopUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.lang.reflect.AnnotatedType;
 import java.lang.reflect.Method;
+import java.lang.reflect.Proxy;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -48,19 +52,18 @@ public class ProxyFactory {
                 enhancer.setCallback(new MethodInterceptor() {
                     @Override
                     public Object intercept(Object o, Method method, Object[] objects, MethodProxy methodProxy) throws Throwable {
-                        RpcRequest request = new RpcRequest();
-                        String uuid = SignUtils.sign(method.toGenericString());
-                        request.setMethodSignId(uuid);
-                        if(objects != null && objects.length != 0){
-                            List<Object> list =new ArrayList();
-                            for(int i= 0;i <objects.length;i++){
-                                list.add(objects[i]);
-                            }
-                            request.setRequestBody(list);
-                        }
                         Thread t = Thread.currentThread();
                         String id = Long.toString(t.getId());
+                        Class<?>[] parameterTypes = method.getParameterTypes();
+                        String name = method.getName();
+                        Class<?> clazz = method.getDeclaringClass();
+
+                        RpcRequest request = new RpcRequest();
+                        request.setMethodName(name);
+                        request.setParameters(objects);
+                        request.setParameterTypes(parameterTypes);
                         request.setThreadId(id);
+                        request.setClazz(clazz);
 
                         nettyClient.getChannel().writeAndFlush(request).addListener(new ChannelFutureListener() {
                             @Override
@@ -77,18 +80,20 @@ public class ProxyFactory {
                             t.sleep(20000L);
                         }catch (InterruptedException ie){
                         }finally {
-                            Object obj = ThreadPool.getObject(id);
-                            if(obj != null && obj instanceof HashMap){
-                                try{
-                                    ObjectMapper objectMapper = new ObjectMapper();
-                                    Class<?> returnType = method.getReturnType();
-                                    byte[] bytes = objectMapper.writeValueAsBytes(obj);
-                                    return objectMapper.readValue(bytes,returnType);
-                                }catch (Exception ex){
-                                    ex.printStackTrace();
+                            RpcResponse obj = ThreadPool.getObject(id);
+                            if("200".equals(obj.getCode()) && obj.getData() != null){
+                                Object data = obj.getData();
+                                if(data instanceof HashMap){
+                                    try{
+                                        ObjectMapper objectMapper = new ObjectMapper();
+                                        Class<?> returnType = method.getReturnType();
+                                        byte[] bytes = objectMapper.writeValueAsBytes(data);
+                                        return objectMapper.readValue(bytes,returnType);
+                                    }catch (Exception ex){
+                                        ex.printStackTrace();
+                                    }
                                 }
-                            }else if(obj != null){
-                                return obj;
+                                return data;
                             }
                             return null;
                         }

@@ -49,6 +49,7 @@ public class UserServiceImpl implements IUserService,IAccountService {
         UserBean u =new UserBean();
         u.setId("1");
         u.setName("name");
+
         return u;
     }
 }
