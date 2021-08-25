@@ -1,11 +1,13 @@
 package com.api.grp.comm;
 
 import io.netty.bootstrap.Bootstrap;
+import io.netty.buffer.Unpooled;
 import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
+import io.netty.handler.codec.DelimiterBasedFrameDecoder;
 import io.netty.handler.codec.FixedLengthFrameDecoder;
 import io.netty.handler.codec.bytes.ByteArrayEncoder;
 import io.netty.handler.codec.string.StringDecoder;
@@ -45,10 +47,11 @@ public class NettyClient implements ApplicationListener<ContextRefreshedEvent> {
                         protected void initChannel(SocketChannel ch) throws Exception {
                             ChannelPipeline pipeline = ch.pipeline();
                             pipeline.addLast(new LoggingHandler(LogLevel.DEBUG));
-                            pipeline.addLast(new RpcRequestMessageToByteEncoder());
+                            pipeline.addLast(new RpcRequestMessageToByteEncoder());//ChannelOutboundHandlerAdapter
 
-                            pipeline.addLast(new RpcResponseByteToMessageDecoder());
-                            pipeline.addLast(new ClientChannelInboundHandlerAdapter());//.addLast(outboundHandlerAdapter);
+                            pipeline.addLast(new DelimiterBasedFrameDecoder(8192,Unpooled.copiedBuffer(CommV.delimiter.getBytes())));//ChannelInboundHandlerAdapter
+                            pipeline.addLast(new RpcResponseByteToMessageDecoder());//ChannelInboundHandlerAdapter
+                            pipeline.addLast(new ClientChannelInboundHandlerAdapter());//ChannelInboundHandlerAdapter
 
                         }
                     });

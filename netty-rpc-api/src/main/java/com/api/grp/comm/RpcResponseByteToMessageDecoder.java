@@ -14,18 +14,17 @@ public class RpcResponseByteToMessageDecoder extends ByteToMessageDecoder {
     @Override
     protected void decode(ChannelHandlerContext channelHandlerContext, ByteBuf byteBuf, List<Object> list) throws Exception {
         int readL =byteBuf.readableBytes();
-        if(readL < HEAD_LENGTH){
-            internalBuffer().resetReaderIndex();
-            return;
-        }
-        byteBuf.markReaderIndex();
-        int len = byteBuf.readInt();
-        if(len < 0){
-            channelHandlerContext.close();
-            return;
-        }
-        if(readL < HEAD_LENGTH){
+//        System.out.println("readL:"+readL);
+        if(readL <= HEAD_LENGTH){
             byteBuf.resetReaderIndex();
+            System.out.println("responseDecode:resetReaderIndex");
+            return;
+        }
+
+        int len = byteBuf.readInt();
+        if(len <= 0){
+            channelHandlerContext.close();
+            System.out.println("responseDecode:close");
             return;
         }
 

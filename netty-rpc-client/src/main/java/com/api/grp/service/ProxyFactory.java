@@ -81,7 +81,7 @@ public class ProxyFactory {
                         }catch (InterruptedException ie){
                         }finally {
                             RpcResponse obj = ThreadPool.getObject(id);
-                            if("200".equals(obj.getCode()) && obj.getData() != null){
+                            if(obj !=null && "200".equals(obj.getCode()) && obj.getData() != null){
                                 Object data = obj.getData();
                                 if(data instanceof HashMap){
                                     try{

@@ -1,12 +1,15 @@
 package com.api.grp.nconfig;
 
+import com.api.grp.comm.CommV;
 import com.api.grp.comm.RpcRequestByteToMessageDecoder;
 import com.api.grp.comm.RpcResponseMessageToByteEncoder;
 import io.netty.bootstrap.ServerBootstrap;
+import io.netty.buffer.Unpooled;
 import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
+import io.netty.handler.codec.DelimiterBasedFrameDecoder;
 import io.netty.handler.codec.FixedLengthFrameDecoder;
 import io.netty.handler.codec.bytes.ByteArrayEncoder;
 import io.netty.handler.codec.string.StringDecoder;
@@ -53,9 +56,11 @@ public class ServerBootstrapListener implements ApplicationListener<ContextRefre
                             @Override
                             protected void initChannel(SocketChannel socketChannel) throws Exception {
                                 ChannelPipeline pipeline = socketChannel.pipeline();
-                                pipeline.addLast(new RpcRequestByteToMessageDecoder());
-                                pipeline.addLast(new RpcResponseMessageToByteEncoder());
-                                pipeline.addLast(new ServerChannelInBoundHandler(contextRefreshedEvent.getApplicationContext()));
+                                pipeline.addLast(new RpcResponseMessageToByteEncoder());//ChannelOutboundHandlerAdapter
+
+                                pipeline.addLast(new DelimiterBasedFrameDecoder(8192,Unpooled.copiedBuffer(CommV.delimiter.getBytes())));//ChannelInboundHandlerAdapter
+                                pipeline.addLast(new RpcRequestByteToMessageDecoder());//ChannelInboundHandlerAdapter
+                                pipeline.addLast(new ServerChannelInBoundHandler(contextRefreshedEvent.getApplicationContext()));//ServerChannelInBoundHandler
 
                             }
                         });

@@ -17,5 +17,6 @@ public class RpcRequestMessageToByteEncoder extends MessageToByteEncoder<RpcRequ
         int length = b.length;
         byteBuf.writeInt(length);
         byteBuf.writeBytes(b);
+        byteBuf.writeBytes(CommV.delimiter.getBytes());//定长要跟分隔符一起使用，否则还是会报错
     }
 }

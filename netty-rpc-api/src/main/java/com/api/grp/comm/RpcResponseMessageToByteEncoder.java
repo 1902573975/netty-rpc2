@@ -16,5 +16,6 @@ public class RpcResponseMessageToByteEncoder extends MessageToByteEncoder<RpcRes
         int length = b.length;
         byteBuf.writeInt(length);
         byteBuf.writeBytes(b);
+        byteBuf.writeBytes(CommV.delimiter.getBytes());
     }
 }

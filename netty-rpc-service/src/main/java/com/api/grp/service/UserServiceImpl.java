@@ -35,9 +35,10 @@ public class UserServiceImpl implements IUserService,IAccountService {
         int i = random.nextInt(100);
         try{
             Thread.sleep(i);
-        }finally {
-            return "Li";
+        }catch (Exception e){
+            e.printStackTrace();
         }
+        return "Li";
     }
 
     public String getUserName(){
