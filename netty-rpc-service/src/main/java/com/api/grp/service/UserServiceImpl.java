@@ -5,9 +5,12 @@ import com.api.grp.api.IUserService;
 import com.api.grp.bean.UserBean;
 import org.springframework.stereotype.Service;
 
+import java.util.Random;
+
 @Service
 public class UserServiceImpl implements IUserService,IAccountService {
 
+    Random random =new Random();
     @Override
     public UserBean getUser(String userName) {
         UserBean b = new UserBean();
@@ -29,8 +32,12 @@ public class UserServiceImpl implements IUserService,IAccountService {
 
     @Override
     public String getAccount(String id) {
-        System.out.println("This is acount");
-        return "Li";
+        int i = random.nextInt(100);
+        try{
+            Thread.sleep(i);
+        }finally {
+            return "Li";
+        }
     }
 
     public String getUserName(){

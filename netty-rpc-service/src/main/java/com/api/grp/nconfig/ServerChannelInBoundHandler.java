@@ -15,6 +15,7 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Service;
 
 import java.lang.reflect.Method;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -28,8 +29,11 @@ public class ServerChannelInBoundHandler extends SimpleChannelInboundHandler<Rpc
         this.applicationContext = applicationContext;
     }
 
+    //多路复用器 ：多路：多io ，复用：同一个线程
     @Override
     protected void channelRead0(ChannelHandlerContext channelHandlerContext, RpcRequest rpcRequest) throws Exception {
+//        System.out.println(Thread.currentThread().getName());
+        System.out.println("s:"+new Date().getTime());
         RpcResponse response =new RpcResponse();
         String threadId = rpcRequest.getThreadId();
         Class<?> clazz = rpcRequest.getClazz();
@@ -68,6 +72,7 @@ public class ServerChannelInBoundHandler extends SimpleChannelInboundHandler<Rpc
             response.setMsg("调用服务错误");
             e.printStackTrace();
         }
+        System.out.println("e:"+new Date().getTime());
         channelHandlerContext.channel().writeAndFlush(response);
     }
 
