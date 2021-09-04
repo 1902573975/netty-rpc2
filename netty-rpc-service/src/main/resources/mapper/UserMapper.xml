@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.api.grp.mapper.UserMapper" >
+
+
+    <select id="getUser" parameterType="long" resultType="UserBean">
+        select * from user where id= #{id}
+    </select>
+
+    <insert id="saveUser" parameterType="UserBean">
+
+    </insert>
+
+    <update id="updateUser" parameterType="UserBean">
+
+
+    </update>
+
+    <delete id="delUser" parameterType="long">
+
+    </delete>
+
+</mapper>
