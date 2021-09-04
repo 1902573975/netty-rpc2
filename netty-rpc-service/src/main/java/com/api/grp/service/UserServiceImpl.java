@@ -36,16 +36,36 @@ public class UserServiceImpl implements IUserService,IAccountService {
         return false;
     }
 
+
     @Override
-    public String getAccount(String id) {
+    public String getAccount(Long id,String type) {
         int i = random.nextInt(100);
         try{
             Thread.sleep(i);
         }catch (Exception e){
             e.printStackTrace();
         }
+        com.api.grp.entity.UserBean user = null;
+        if(type.equals("s")){
+            user = userMapper.getUser(id);
+        }else if(type.equals("i")){
+            user = new com.api.grp.entity.UserBean();
+            user.setUserName("userName_"+i);
+            user.setPassword("password");
+            user.setRealName("realName"+i);
+            user.setSex("1");
+            user.setCardNum("card");
+            System.out.println(userMapper.saveUser(user));
+        }else if(type.equals("u")){
+            user= userMapper.getUser(id);
+            user.setRealName(i+"");
+            System.out.println(userMapper.updateUser(user));
+        }else if(type.equals("d")){
+            System.out.println(userMapper.delUser(id));
+        }else{
+            return "Li";
+        }
 
-        com.api.grp.entity.UserBean user = userMapper.getUser(1L);
         return user == null?"Li":user.toString();
     }
 

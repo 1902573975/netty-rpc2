@@ -6,5 +6,5 @@ import com.api.grp.comm.RPCService;
 @RPCService(serviceName = "SNOW_SERVICE")
 public interface IAccountService extends ICommService{
 
-    String getAccount(String id);
+    String getAccount(Long id,String type);
 }

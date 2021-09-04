@@ -7,6 +7,7 @@ import com.api.grp.service.ProxyFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.PostConstruct;
@@ -22,8 +23,8 @@ public class TestController {
     IUserService userService;
 
     @GetMapping("/do")
-    public String test(){
-        return accountService.getAccount("1");
+    public String test(@RequestParam(required = false,defaultValue = "1") Long id,@RequestParam(required = false,defaultValue = "s") String type){
+        return accountService.getAccount(id,type);
     }
 
     @GetMapping("/do2")

@@ -48,6 +48,9 @@ public class ServerChannelInBoundHandler extends SimpleChannelInboundHandler<Rpc
                 if(parameters[i] instanceof LinkedHashMap && !HashMap.class.isAssignableFrom(parameterTypes[i])){
                     byte[] bytes = objectMapper.writeValueAsBytes(parameters[i]);
                     parameters[i] = objectMapper.readValue(bytes,parameterTypes[i]);
+                }else if(!(parameters[i] instanceof String)){
+                    byte[] bytes = objectMapper.writeValueAsBytes(parameters[i]);
+                    parameters[i] = objectMapper.readValue(bytes,parameterTypes[i]);
                 }
             }
         }
