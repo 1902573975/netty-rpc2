@@ -1,5 +1,10 @@
 
 spring:
+  datasource:
+    username: root
+    password: 123456
+    url: jdbc:mysql://localhost:3306/order?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=UTC
+    driver-class-name: com.mysql.cj.jdbc.Driver
   application:
     name: SNOW_SERVICE
 zk:
@@ -14,3 +19,14 @@ zk:
 netty:
   enabled: true
   port: 10288
+
+
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.api.grp.entity
+  type-handlers-package: com.api.grp.handler
+  executor-type: REUSE
+  configuration:
+    #使用驼峰
+    map-underscore-to-camel-case: true
+

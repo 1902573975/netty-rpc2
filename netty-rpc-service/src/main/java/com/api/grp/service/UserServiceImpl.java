@@ -3,12 +3,18 @@ package com.api.grp.service;
 import com.api.grp.api.IAccountService;
 import com.api.grp.api.IUserService;
 import com.api.grp.bean.UserBean;
+import com.api.grp.mapper.UserMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Random;
 
 @Service
 public class UserServiceImpl implements IUserService,IAccountService {
+
+    @Autowired
+    private UserMapper userMapper;
+
 
     Random random =new Random();
     @Override
@@ -38,7 +44,9 @@ public class UserServiceImpl implements IUserService,IAccountService {
         }catch (Exception e){
             e.printStackTrace();
         }
-        return "Li";
+
+        com.api.grp.entity.UserBean user = userMapper.getUser(1L);
+        return user == null?"Li":user.toString();
     }
 
     public String getUserName(){

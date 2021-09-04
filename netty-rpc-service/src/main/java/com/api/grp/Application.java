@@ -1,10 +1,12 @@
 package com.api.grp;
 
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext;
-import org.springframework.context.annotation.ConfigurationClassPostProcessor;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+@EnableTransactionManagement
+@MapperScan(basePackages = "com.api.grp.mapper")
 @SpringBootApplication
 public class Application {
 
