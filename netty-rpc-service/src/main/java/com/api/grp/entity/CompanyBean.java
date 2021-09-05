@@ -1,4 +1,6 @@
 package com.api.grp.entity;
 
-public class CompanyBean {
+import java.io.Serializable;
+
+public class CompanyBean implements Serializable{
 }

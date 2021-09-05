@@ -33,7 +33,7 @@ public class ServerChannelInBoundHandler extends SimpleChannelInboundHandler<Rpc
     @Override
     protected void channelRead0(ChannelHandlerContext channelHandlerContext, RpcRequest rpcRequest) throws Exception {
 //        System.out.println(Thread.currentThread().getName());
-        System.out.println("s:"+new Date().getTime());
+//        System.out.println("s:"+new Date().getTime());
         RpcResponse response =new RpcResponse();
         String threadId = rpcRequest.getThreadId();
         Class<?> clazz = rpcRequest.getClazz();

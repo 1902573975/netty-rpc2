@@ -11,6 +11,7 @@ import java.util.Properties;
 
 /**
  * type 指定接口，方法指定方法名称， 参数指定方法的参数列表。
+ * select 查询会调用query方法，其他update/delete/insert 会调用 update方法
  */
 @Component
 @Intercepts({

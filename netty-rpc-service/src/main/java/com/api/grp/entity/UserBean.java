@@ -1,6 +1,8 @@
 package com.api.grp.entity;
 
-public class UserBean {
+import java.io.Serializable;
+
+public class UserBean implements Serializable{
 
     private Long id;
     private String userName;

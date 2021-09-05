@@ -14,7 +14,7 @@ public class RpcRequestByteToMessageDecoder extends ByteToMessageDecoder {
     @Override
     protected void decode(ChannelHandlerContext channelHandlerContext, ByteBuf byteBuf, List<Object> list) throws Exception {
         int readL =byteBuf.readableBytes();
-        System.out.println("readL:"+readL);
+//        System.out.println("readL:"+readL);
         if(readL <= HEAD_LENGTH){
             byteBuf.resetReaderIndex();
             System.out.println("decode:resetReaderIndex");
