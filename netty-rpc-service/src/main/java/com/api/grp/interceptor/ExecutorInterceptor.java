@@ -1,7 +1,9 @@
 package com.api.grp.interceptor;
 
+import org.apache.ibatis.builder.StaticSqlSource;
 import org.apache.ibatis.executor.Executor;
 import org.apache.ibatis.mapping.MappedStatement;
+import org.apache.ibatis.mapping.SqlSource;
 import org.apache.ibatis.plugin.*;
 import org.apache.ibatis.session.ResultHandler;
 import org.apache.ibatis.session.RowBounds;
@@ -22,6 +24,11 @@ public class ExecutorInterceptor implements Interceptor {
     @Override
     public Object intercept(Invocation invocation) throws Throwable {
         System.out.println("intercept...."+invocation.getMethod().getName());
+        MappedStatement statement =(MappedStatement) invocation.getArgs()[0];
+        SqlSource sqlSource = statement.getSqlSource();
+        if(sqlSource instanceof StaticSqlSource){
+            StaticSqlSource staticSqlSource = (StaticSqlSource)sqlSource;
+        }
         return invocation.proceed();
     }
 
