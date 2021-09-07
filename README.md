@@ -9,5 +9,6 @@ password varchar(64),
 sex varchar(2),
 real_name varchar(32),
 card_num varchar(64),
+tenant_id varchar(32), 
 primary key(id)
 );

@@ -10,6 +10,7 @@ public class UserBean implements Serializable{
     private String sex;
     private String realName;
     private String cardNum;
+    private String tenantId;
 
     public Long getId() {
         return id;
@@ -57,6 +58,14 @@ public class UserBean implements Serializable{
 
     public void setCardNum(String cardNum) {
         this.cardNum = cardNum;
+    }
+
+    public String getTenantId() {
+        return tenantId;
+    }
+
+    public void setTenantId(String tenantId) {
+        this.tenantId = tenantId;
     }
 
     @Override

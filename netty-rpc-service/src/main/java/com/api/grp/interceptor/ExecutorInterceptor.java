@@ -23,12 +23,12 @@ import java.util.Properties;
 public class ExecutorInterceptor implements Interceptor {
     @Override
     public Object intercept(Invocation invocation) throws Throwable {
-        System.out.println("intercept...."+invocation.getMethod().getName());
-        MappedStatement statement =(MappedStatement) invocation.getArgs()[0];
-        SqlSource sqlSource = statement.getSqlSource();
-        if(sqlSource instanceof StaticSqlSource){
-            StaticSqlSource staticSqlSource = (StaticSqlSource)sqlSource;
-        }
+        System.out.println("Executor Intercept");
+//        MappedStatement statement =(MappedStatement) invocation.getArgs()[0];
+//        SqlSource sqlSource = statement.getSqlSource();
+//        if(sqlSource instanceof StaticSqlSource){
+//            StaticSqlSource staticSqlSource = (StaticSqlSource)sqlSource;
+//        }
         return invocation.proceed();
     }
 
