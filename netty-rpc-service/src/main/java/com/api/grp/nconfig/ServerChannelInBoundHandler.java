@@ -75,7 +75,7 @@ public class ServerChannelInBoundHandler extends SimpleChannelInboundHandler<Rpc
             response.setMsg("调用服务错误");
             e.printStackTrace();
         }
-        System.out.println("e:"+new Date().getTime());
+//        System.out.println("e:"+new Date().getTime());
         channelHandlerContext.channel().writeAndFlush(response);
     }
 

@@ -45,7 +45,7 @@ public class StatementInterceptor implements Interceptor {
                 sql  =sql.substring(0,sql.length()-1)  +",'"+TENANT_ID_VALUE+"')";
             }
             metaObject.setValue("delegate.boundSql.sql",sql);
-            System.out.println(sql);
+//            System.out.println(sql);
         }else if(SqlCommandType.SELECT.equals(statement.getSqlCommandType())){
             tenantIdParameter(parameterHandler);
         }
